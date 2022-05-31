@@ -26,6 +26,7 @@ function createTableElements(...$arguments)
   }
 }
 
+
 ?>
 
 <h3 class="heading--secondary">Teaching Courses</h3>
@@ -46,6 +47,7 @@ function createTableElements(...$arguments)
     if (mysqli_num_rows($displayInstructorCourses) > 0) {
       while ($tupple = mysqli_fetch_assoc($displayInstructorCourses)) {
         echo $tableRowStart;
+        // TODO createTableElements($tupple["issn"], $tupple["courseCode"], $tupple["yearr"], $tupple["semester"], $tupple["sectionId"], "Add Exam");
         createTableElements($tupple["issn"], $tupple["courseCode"], $tupple["yearr"], $tupple["semester"], $tupple["sectionId"]);
         echo $tableRowEnd;
       }
@@ -195,6 +197,126 @@ function createTableElements(...$arguments)
           $tupple["gradorUgrad"] = "Graduate"
         } */
         createTableElements($tupple["sssn"], $tupple["studentname"], $tupple["studentid"], $tupple["iname"], $tupple["issn"]);
+        echo $tableRowEnd;
+      }
+    }
+    ?>
+  </tbody>
+</table>
+
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<h3 class="heading--secondary">Exams of Courses</h3>
+<table class="table">
+  <thead>
+    <td>Exam Name</td>
+    <td>Instructor SSN</td>
+    <td>Instructor Name</td>
+    <td>Course Code</td>
+    <td>Exam Date</td>
+    <td>Year</td>
+    <td>Semester</td>
+    <td>Section ID</td>
+  </thead>
+  <tbody>
+    <?php
+
+    $displayCourseExamsQuery = "SELECT E.eName, I.iname, E.issn, E.courseCode, E.edate, E.yearr, E.semester, E.sectionId FROM exam E, instructor I WHERE E.issn = I.ssn AND I.ssn = '$issn'";
+    $displayCourseExamsResult = mysqli_query($conn, $displayCourseExamsQuery);
+
+    if (mysqli_num_rows($displayCourseExamsResult) > 0) {
+      while ($tupple = mysqli_fetch_assoc($displayCourseExamsResult)) {
+        echo $tableRowStart;
+        /* if($tupple["gradorUgrad"] == 0){
+          $tupple["gradorUgrad"] = "Graduate"
+        } */
+        createTableElements($tupple["eName"], $tupple["issn"], $tupple["iname"], $tupple["courseCode"], $tupple["edate"], $tupple["yearr"], $tupple["semester"], $tupple["sectionId"]);
+        echo $tableRowEnd;
+      }
+    }
+    ?>
+  </tbody>
+</table>
+
+<form action="./addExam.php" class="add-exam-form" method="POST">
+  <label for="examName">Exam Name</label>
+  <input type="text" name="examName" id="examName" placeholder="Enter your examName">
+  <label for="examDate">Exam Date</label>
+  <input type="text" name="examDate" id="examDate" placeholder="Enter your examDate">
+  <select name="courseList" id="courseList">
+    <?php
+    $displayInstructorsCoursesQuery = "SELECT DISTINCT E.issn, E.courseCode, E.yearr, E.semester, E.sectionId FROM enrollment E WHERE E.issn = '$issn'";
+    $displayInstructorCourses = mysqli_query($conn, $displayInstructorsCoursesQuery);
+
+    if (mysqli_num_rows($displayInstructorCourses) > 0) {
+      while ($tupple = mysqli_fetch_assoc($displayInstructorCourses)) {
+        $examOption = $tupple["issn"] . "-" . $tupple["courseCode"] . "-" . $tupple["yearr"] . "-" . $tupple["semester"] . "-" . $tupple["sectionId"];
+        echo "<option value='$examOption'>" . $examOption . "</option>";
+      }
+    }
+    // TODO => When we add an exam, it must be attended with all student who take the relevant section.
+    ?>
+  </select>
+  <button class="btn btn-success my-2" type="submit">Add Exam</button>
+</form>
+
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<h3 class="heading--secondary">Weekly Schedule</h3>
+<table class="table">
+  <thead>
+    <td>Days \ Hours</td>
+    <?php
+
+    $displayWeeklyScheduleHoursQuery = "SELECT DISTINCT hourr FROM timeslot";
+    $displayWeeklyScheduleHoursResult = mysqli_query($conn, $displayWeeklyScheduleHoursQuery);
+
+    if (mysqli_num_rows($displayWeeklyScheduleHoursResult) > 0) {
+      while ($tupple = mysqli_fetch_assoc($displayWeeklyScheduleHoursResult)) {
+        createTableElements($tupple["hourr"]);
+      }
+    }
+    ?>
+  </thead>
+  <tbody>
+    <?php
+    $sortedDays = [];
+    $displayWeeklyScheduleDistinctDaysQuery = "SELECT DISTINCT dayy as day FROM timeslot ORDER BY CASE WHEN dayy = 'Sunday' THEN 1 WHEN dayy = 'Monday' THEN 2 WHEN dayy = 'Tuesday' THEN 3 WHEN dayy = 'Wednesday' THEN 4 WHEN dayy = 'Thursday' THEN 5 WHEN dayy = 'Friday' THEN 6 WHEN dayy = 'Saturday' THEN 7 END ASC";
+    $displayWeeklyScheduleDistinctDaysResult = mysqli_query($conn, $displayWeeklyScheduleDistinctDaysQuery);
+    if (mysqli_num_rows($displayWeeklyScheduleDistinctDaysResult) > 0) {
+      while ($tupple = mysqli_fetch_assoc($displayWeeklyScheduleDistinctDaysResult)) {
+        /* global $tableRowStart, $tableRowEnd;
+        echo $tableRowStart . createTableElements($tupple["day"]); */
+        array_push($sortedDays, $tupple["day"]);
+      }
+    }
+    //print_r($sortedDays);
+
+    $courseArray = [];
+    //$displayWeeklyScheduleOfInstructorQuery = "SELECT DISTINCT W.issn, W.courseCode, W.sectionId, W.yearr, W.semester, W.dayy, W.hourr FROM sectionn S JOIN weeklyschedule W on S.issn = W.issn WHERE W.issn = '$issn'";
+    $displayWeeklyScheduleOfInstructorQuery = "SELECT DISTINCT W.issn, W.courseCode, W.sectionId, W.yearr, W.semester, W.dayy, W.hourr FROM sectionn S JOIN weeklyschedule W on S.issn = W.issn WHERE W.issn = '$issn'";
+    $displayWeeklyScheduleOfInstructorQueryResult = mysqli_query($conn, $displayWeeklyScheduleOfInstructorQuery);
+
+    if (mysqli_num_rows($displayWeeklyScheduleOfInstructorQueryResult) > 0) {
+      while ($tupple = mysqli_fetch_assoc($displayWeeklyScheduleOfInstructorQueryResult)) {
+        array_push($courseArray, $tupple["issn"], $tupple["sectionId"], $tupple["courseCode"], $tupple["yearr"], $tupple["semester"], $tupple["dayy"], $tupple["hourr"]);
+      }
+    }
+    //print_r($courseArray);
+
+    global $tableRowStart, $tableRowEnd;
+    for ($i = 0; $i < count($sortedDays); $i++) {
+      echo $tableRowStart . createTableElements($sortedDays[$i]);
+      /* if ($sortedDays[$i] == $courseArray[5]) {
+        createTableElements("osman");
+      } */
+      for ($j = 0; $j < count($courseArray); $j++) {
+        if($sortedDays[$i] == $courseArray[$j]){
+          //echo "Osman";
+          echo $sortedDays[$i].$courseArray[$j] = "Osman";
+          //createTableElements($sortedDays[$i], $courseArray[$j]);
+          echo $tableRowEnd;
+        }
         echo $tableRowEnd;
       }
     }
