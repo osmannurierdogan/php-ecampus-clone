@@ -12,7 +12,9 @@ $userRole = mysqli_query($conn, $findUserRole);
 if ($row = mysqli_fetch_assoc($userRole)) {
   if ($row["role"] == "instructor") {
     //echo "Instructor - ";
-    header('location: ' . "./instructor.php");
+    $issn = $ssn;
+    
+    header('location: ' . "./instructor.php?ssn=$issn");
   } else if ($row["role"] == "student") {
     header('location: ' . "./student.php");
     //echo "Student - ";
