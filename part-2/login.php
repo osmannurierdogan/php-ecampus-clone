@@ -35,7 +35,7 @@ if ($row = mysqli_fetch_assoc($userRole)) {
     $issn = $ssn;
     header("location: ./instructor.php?issn=$issn");
   } else if ($row["role"] == "student") {
-    header("location:./student.php?ssn=$ssn");
+    header("location:./student.php");
     //echo "Student - ";
   }
 }

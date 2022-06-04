@@ -1,0 +1,302 @@
+@import "./_reset.scss";
+@import "./_variables.scss";
+@import "./_mixins.scss";
+@import "./_utilities.scss";
+
+*:focus {
+	outline: none;
+	box-shadow: 0 0 0 0.8rem rgba($color: $color-primary, $alpha: 0.5);
+}
+
+html {
+	font-size: 62.5%; // 1rem = 10px
+	box-sizing: border-box;
+	//overflow-x: hidden;
+	//scroll-behavior: smooth;
+	/* @include responsive(tab-land) {
+		font-size: 56.25%;
+	}
+	@include responsive(tab-port) {
+		font-size: 50%;
+	} */
+}
+body {
+	background-color: $color-primary-light-8;
+	font-weight: 400;
+	font-family: $montserrat-font-family;
+	color: $color-primary-dark-9;
+}
+// ! HEADER STYLES START
+.header {
+	font-size: 1.8rem;
+	margin: 2.5% 7% 5% 7%;
+	& .nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 2.4rem;
+		text-decoration: none;
+		&__link {
+			&:link,
+			&:visited {
+				color: $color-primary-dark-9;
+				transition: all 0.3s;
+				font-weight: 600;
+				border: 2px solid currentColor;
+				padding: 0.8rem;
+				&:nth-child(even) {
+					border-top-right-radius: 1rem;
+					border-bottom-left-radius: 1rem;
+				}
+				&:nth-child(odd) {
+					border-top-left-radius: 1rem;
+					border-bottom-right-radius: 1rem;
+				}
+			}
+			&:active,
+			&:hover {
+				//color: $color-primary-dark-8;
+				//background-color: currentColor;
+				//border-color: currentColor;
+				border-color: $color-primary-dark-8;
+				background-color: $color-primary-dark-8;
+				color: $color-white;
+			}
+		}
+	}
+}
+// ! HEADER STYLES END
+.section-heading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	margin-top: 2.6rem;
+	background-color: $color-primary-light-2;
+	padding: 1.2rem 1.4rem;
+	color: $color-white;
+	border-radius: 1rem;
+	&__icon {
+		cursor: pointer;
+		font-size: 1.8rem;
+	}
+}
+
+// ! TABLE STYLES START
+table.table {
+	font-size: 1.2rem;
+	width: 95%;
+	margin: 2% auto;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 1.2;
+	& thead {
+		font-size: 1.6rem;
+		font-weight: 600;
+		& tr {
+			background-color: $color-primary-dark-5;
+			color: $color-primary-light-8;
+			& td {
+				padding: 0.6rem;
+				&:first-child {
+					border-top-left-radius: 1rem;
+				}
+				&:last-child {
+					border-top-right-radius: 1rem;
+				}
+			}
+		}
+	}
+	& tbody {
+		& tr {
+			&:nth-child(odd) {
+				background-color: $color-primary-dark-9;
+				color: $color-primary-light-9;
+			}
+			&:last-child {
+				& td {
+					&:first-child {
+						border-bottom-left-radius: 1rem;
+					}
+					&:last-child {
+						border-bottom-right-radius: 1rem;
+					}
+				}
+			}
+		}
+		& td {
+			padding: 1.2rem;
+			//font-size: 1.4rem;
+			font-weight: 600;
+		}
+	}
+}
+// ! TABLE STYLES END
+
+// ! ADD EXAM FROM STYLES START
+/* .form{
+  box-shadow: 0 2.4rem 4.8rem rgb(0 0 0 / 15%);
+	border-radius: 11px;
+	background-image: linear-gradient(to right bottom, #eb984e, #e67e22);
+	overflow: hidden;
+} */
+.add-exam-form {
+	display: grid;
+	//grid-template-columns: 45% 55%;
+	width: 75%;
+	grid-template-columns: 2fr 1fr;
+	//gap: 2.4rem;
+	margin: 2% auto;
+	background-image: linear-gradient(to right bottom, #eb984e, #e67e22);
+	padding: 3.2rem;
+	border-radius: 1.2rem;
+	overflow: hidden;
+
+	&__information-box {
+		display: grid;
+		grid-template-columns: 1fr;
+		align-content: center;
+		gap: 2rem;
+		//width: 100%;
+		& .form-group {
+			display: flex;
+			flex-direction: column;
+
+			& input,
+			& select {
+				font-size: 1.6rem;
+				cursor: pointer;
+				color: inherit;
+				font-family: inherit;
+				padding: 1.2rem;
+				border: none;
+				background-color: #fdf2e9;
+				border-radius: 1rem;
+				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01);
+			}
+			& label {
+				font-size: 1.4rem;
+				font-weight: 600;
+				margin-bottom: 0.8rem;
+				color: $color-primary-dark-1;
+			}
+		}
+	}
+	&__image-box {
+		margin-left: 2.4rem;
+		background-image: linear-gradient(
+				to right bottom,
+				rgba(235, 152, 78, 0.35),
+				rgba(230, 126, 34, 0.35)
+			),
+			url(../images/exam-photo.jpg);
+		object-fit: cover;
+		background-size: cover;
+		background-position: center;
+	}
+}
+// ! ADD EXAM FROM STYLES END
+button.button {
+	&--add-exam, &--login {
+		background-color: $color-primary-dark-3;
+		color: $color-primary-light-9;
+		align-self: end;
+		padding: 1.2rem;
+		font-weight: 500;
+		font-size: 1.6rem;
+		transition: all 0.3s;
+		border-radius: 1.2rem;
+		cursor: pointer;
+		border: 3px solid $color-primary-dark-3;
+
+		&:hover,
+		&:active {
+			color: $color-primary-dark-3;
+			background-color: $color-primary-light-9;
+			border-color: $color-primary-light-9;
+		}
+	}
+	&--login{
+		align-self: center;
+		width: 100%;
+		margin-top: 1rem;
+		font-weight: 700;
+	}
+}
+// ! OPENED CLASS STYLES START
+/* div.section-container.closed {
+  visibility: hidden;
+  display: none;
+} */
+div.section-container {
+	visibility: hidden;
+	display: none;
+}
+div.section-container.opened {
+	visibility: visible;
+	display: block;
+}
+// ! OPENED CLASS STYLES END
+
+// ! FOOTER STYLES START
+.footer {
+	&-text {
+		position: fixed;
+		color: rgb(75, 3, 75);
+		font-size: 2rem;
+		top: 50%;
+		&:first-child {
+			left: 0;
+			transform: translateY(-50%);
+			transform: rotate(-90deg);
+		}
+		&:last-child {
+			right: 0;
+			transform: translateY(-50%);
+			transform: rotate(90deg);
+		}
+	}
+}
+// ! FOOTER STYLES END
+
+.login{
+	&-box {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		&-heading{
+			margin-bottom: 5rem;
+			font-size: 6.4rem;
+			font-weight: 600;
+			text-align: center;
+		}
+	& .form-group {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1rem;
+
+		& input,
+		& select {
+			font-size: 1.6rem;
+			cursor: pointer;
+			color: inherit;
+			font-family: inherit;
+			padding: 1.2rem;
+			border: none;
+			background-color: #fdf2e9;
+			border-radius: 1rem;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01);
+		}
+		& label {
+			font-size: 1.4rem;
+			font-weight: 600;
+			margin-bottom: 0.8rem;
+			color: $color-primary-dark-1;
+		}
+	}
+}}

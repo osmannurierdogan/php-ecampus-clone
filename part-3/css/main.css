@@ -1,0 +1,561 @@
+@import url("https://fonts.googleapis.com/css2?family=Calligraffitti&family=Inter:wght@400;500;600;700;800;900&family=Kumbh+Sans:wght@400;700&family=Montserrat:wght@400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap");
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-decoration: none;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+q {
+  quotes: none;
+}
+
+q::after, q::before {
+  content: '';
+  content: none;
+}
+
+blockquote {
+  quotes: none;
+}
+
+blockquote::after, blockquote::before {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+
+!  01 TYPOGRAPHY SYSTEM
+
+* Font size system (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98 
+
+* Font Weights:
+Default: 400
+
+* Line heights:
+Default: 1
+
+! 02 COLORS
+
+* Primary: 
+- #e67e22
+* Tints:
+-  
+* Shades: 
+- 
+* Accents: 
+- 
+* Grays: 
+- #555555
+- #333333
+
+! 05 SHADOWS
+
+! 06 BORDER-RADIUS
+
+! 07 WHITESPACE
+* Spacing System (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+
+*/
+/*
+0 - 600px: 				Phone
+600px - 900px: 		Tablet Portrait
+900px - 1200px: 	Tablet Landscape
+[1200px - 1800px] is where our normal styles apply Desktop
+1800px + : 				Big Desktop
+
+
+$breakpoint argument choices:
+* - phone-small == 432px = 27em 
+* - phone == 544px = 34em
+* - tab-small == 704px = 44em
+* - tab-port == 940px = 59em
+* - tab-land == 1200px = 75em
+* - small-desktop == 1360px = 85em
+* - big-desktop == 1360px <
+
+ORDER : Base + Typography > General Layout + grid > page layout > components
+*/
+.heading--secondary {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.margin-right-small {
+  margin-right: 1.6rem !important;
+}
+
+.margin-bottom-medium {
+  margin-bottom: 4.8rem !important;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 3.2rem;
+}
+
+.grid {
+  display: -ms-grid;
+  display: grid;
+  -webkit-column-gap: 6.4rem;
+          column-gap: 6.4rem;
+  row-gap: 9.6rem;
+  /* @include responsive(tab-land) {
+		column-gap: 4.8rem;
+		row-gap: 6.4rem;
+	}
+	@include responsive(phone) {
+		row-gap: 4.8rem;
+	} */
+}
+
+.grid--align-center {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.grid--2-cols {
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  /* @include responsive(phone) {
+			grid-template-columns: 1fr;
+		} */
+}
+
+.grid--3-cols {
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  /* @include responsive(tab-small) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@include responsive(phone) {
+			grid-template-columns: 1fr;
+		} */
+}
+
+.grid--4-cols {
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+  /* @include responsive(tab-small) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@include responsive(phone) {
+			grid-template-columns: 1fr;
+		} */
+}
+
+.grid--5-cols {
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+}
+
+.grid--6-cols {
+  -ms-grid-columns: (1fr)[6];
+      grid-template-columns: repeat(6, 1fr);
+}
+
+.grid:not(:last-child) {
+  margin-bottom: 9.6rem;
+}
+
+.grid--footer {
+  -ms-grid-columns: (1.5fr)[2] (1fr)[3];
+      grid-template-columns: repeat(2, 1.5fr) repeat(3, 1fr);
+  /* @include responsive(phone) {
+			grid-template-columns: 1fr;
+		}
+		@include responsive(tab-small) {
+			grid-template-columns: repeat(6, 1fr);
+		} */
+}
+
+*:focus {
+  outline: none;
+  -webkit-box-shadow: 0 0 0 0.8rem rgba(230, 126, 34, 0.5);
+          box-shadow: 0 0 0 0.8rem rgba(230, 126, 34, 0.5);
+}
+
+html {
+  font-size: 62.5%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  /* @include responsive(tab-land) {
+		font-size: 56.25%;
+	}
+	@include responsive(tab-port) {
+		font-size: 50%;
+	} */
+}
+
+body {
+  background-color: #fae5d3;
+  font-weight: 400;
+  font-family: "Montserrat", sans-serif;
+  color: #cf711f;
+}
+
+.header {
+  font-size: 1.8rem;
+  margin: 2.5% 7% 5% 7%;
+}
+
+.header .nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 2.4rem;
+  text-decoration: none;
+}
+
+.header .nav__link:link, .header .nav__link:visited {
+  color: #cf711f;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  font-weight: 600;
+  border: 2px solid currentColor;
+  padding: 0.8rem;
+}
+
+.header .nav__link:link:nth-child(even), .header .nav__link:visited:nth-child(even) {
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.header .nav__link:link:nth-child(odd), .header .nav__link:visited:nth-child(odd) {
+  border-top-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.header .nav__link:active, .header .nav__link:hover {
+  border-color: #b8651b;
+  background-color: #b8651b;
+  color: #ffffff;
+}
+
+.section-heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 2rem;
+  margin-top: 2.6rem;
+  background-color: #eb984e;
+  padding: 1.2rem 1.4rem;
+  color: #ffffff;
+  border-radius: 1rem;
+}
+
+.section-heading__icon {
+  cursor: pointer;
+  font-size: 1.8rem;
+}
+
+table.table {
+  font-size: 1.2rem;
+  width: 95%;
+  margin: 2% auto;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.2;
+}
+
+table.table thead {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+table.table thead tr {
+  background-color: #733f11;
+  color: #fae5d3;
+}
+
+table.table thead tr td {
+  padding: 0.6rem;
+}
+
+table.table thead tr td:first-child {
+  border-top-left-radius: 1rem;
+}
+
+table.table thead tr td:last-child {
+  border-top-right-radius: 1rem;
+}
+
+table.table tbody tr:nth-child(odd) {
+  background-color: #cf711f;
+  color: #fdf2e9;
+}
+
+table.table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 1rem;
+}
+
+table.table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 1rem;
+}
+
+table.table tbody td {
+  padding: 1.2rem;
+  font-weight: 600;
+}
+
+/* .form{
+  box-shadow: 0 2.4rem 4.8rem rgb(0 0 0 / 15%);
+	border-radius: 11px;
+	background-image: linear-gradient(to right bottom, #eb984e, #e67e22);
+	overflow: hidden;
+} */
+.add-exam-form {
+  display: -ms-grid;
+  display: grid;
+  width: 75%;
+  -ms-grid-columns: 2fr 1fr;
+      grid-template-columns: 2fr 1fr;
+  margin: 2% auto;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#eb984e), to(#e67e22));
+  background-image: linear-gradient(to right bottom, #eb984e, #e67e22);
+  padding: 3.2rem;
+  border-radius: 1.2rem;
+  overflow: hidden;
+}
+
+.add-exam-form__information-box {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  gap: 2rem;
+}
+
+.add-exam-form__information-box .form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.add-exam-form__information-box .form-group input,
+.add-exam-form__information-box .form-group select {
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  padding: 1.2rem;
+  border: none;
+  background-color: #fdf2e9;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.01);
+}
+
+.add-exam-form__information-box .form-group label {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: #170d03;
+}
+
+.add-exam-form__image-box {
+  margin-left: 2.4rem;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(235, 152, 78, 0.35)), to(rgba(230, 126, 34, 0.35))), url(../images/exam-photo.jpg);
+  background-image: linear-gradient(to right bottom, rgba(235, 152, 78, 0.35), rgba(230, 126, 34, 0.35)), url(../images/exam-photo.jpg);
+  -o-object-fit: cover;
+    object-fit: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+button.button--add-exam {
+  background-color: #45260a;
+  color: #fdf2e9;
+  -ms-flex-item-align: end;
+      -ms-grid-row-align: end;
+      align-self: end;
+  padding: 1.2rem;
+  font-weight: 500;
+  font-size: 1.6rem;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  border: 3px solid #45260a;
+}
+
+button.button--add-exam:hover, button.button--add-exam:active {
+  color: #45260a;
+  background-color: #fdf2e9;
+  border-color: #fdf2e9;
+}
+
+/* div.section-container.closed {
+  visibility: hidden;
+  display: none;
+} */
+div.section-container {
+  visibility: hidden;
+  display: none;
+}
+
+div.section-container.opened {
+  visibility: visible;
+  display: block;
+}
+
+.footer-text {
+  position: fixed;
+  color: #4b034b;
+  font-size: 2rem;
+  top: 50%;
+}
+
+.footer-text:first-child {
+  left: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+
+.footer-text:last-child {
+  right: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}

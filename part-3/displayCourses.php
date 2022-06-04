@@ -28,7 +28,8 @@ $result = mysqli_query($conn, $query);
         echo $tableRowEnd;
       }
     }
-    function createTableElements($issn, $courseCode, $yearr, $semester, $sectionId){
+    function createTableElements($issn, $courseCode, $yearr, $semester, $sectionId)
+    {
       $tableDataStart = "<td>";
       $tableDataEnd = "</td>";
       echo $tableDataStart . $issn . $tableDataEnd;
@@ -40,3 +41,5 @@ $result = mysqli_query($conn, $query);
     ?>
   </tbody>
 </table>
+
+<?php include "./footer.php" ?>

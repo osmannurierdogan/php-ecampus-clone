@@ -1,0 +1,83 @@
+// ! GOOGLE FONTS 
+@import url('https://fonts.googleapis.com/css2?family=Calligraffitti&family=Inter:wght@400;500;600;700;800;900&family=Kumbh+Sans:wght@400;700&family=Montserrat:wght@400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap');
+
+
+/*
+
+!  01 TYPOGRAPHY SYSTEM
+
+* Font size system (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98 
+
+* Font Weights:
+Default: 400
+
+* Line heights:
+Default: 1
+
+! 02 COLORS
+
+* Primary: 
+- #e67e22
+* Tints:
+-  
+* Shades: 
+- 
+* Accents: 
+- 
+* Grays: 
+- #555555
+- #333333
+
+! 05 SHADOWS
+
+! 06 BORDER-RADIUS
+
+! 07 WHITESPACE
+* Spacing System (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+
+*/
+
+$calligraffitti-font-family: "Calligraffitti", cursive;
+$inter-font-family: "Inter", sans-serif;
+$rubik-font-family: "Rubik", sans-serif;
+$montserrat-font-family: "Montserrat", sans-serif;
+
+$color-gray-1: #555555;
+$color-gray-2: #333333;
+$color-gray-3: #dddddd;
+$color-gray-4: #888888;
+$color-gray-5: #6f6f6f;
+$color-gray-6: #767676;
+$color-gray-7: #eeeeee;
+$color-gray-8: #aaaaaa;
+
+$color-accent-vegetarian: #51cf66;
+$color-accent-vegan: #94d82d;
+$color-accent-paleo: #ffd43b;
+$color-white: #ffffff;
+// ! TINTS
+
+$color-primary-dark-1: #170d03;
+$color-primary-dark-2: #2e1907;
+$color-primary-dark-3: #45260a;
+$color-primary-dark-4: #5c320e;
+$color-primary-dark-5: #733f11;
+$color-primary-dark-6: #8a4c14;
+$color-primary-dark-7: #a15818;
+$color-primary-dark-8: #b8651b;
+$color-primary-dark-9: #cf711f;
+$color-primary: #e67e22;
+$color-primary-light-1: #e98b38;
+$color-primary-light-2: #eb984e;
+$color-primary-light-3: #eea564;
+$color-primary-light-4: #f0b27a;
+$color-primary-light-5: #f3bf91;
+$color-primary-light-6: #f5cba7;
+$color-primary-light-7: #f8d8bd;
+$color-primary-light-8: #fae5d3;
+$color-primary-light-9: #fdf2e9;
+
+
+// ! SHADES
