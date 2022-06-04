@@ -441,23 +441,23 @@ CREATE TABLE userr (
 
 
 INSERT INTO userr (ssn, role, Password) VALUES
-('i1', 'instructor', NULL),
-('i2', 'instructor', NULL),
-('i3', 'instructor', NULL),
-('i4', 'instructor', NULL),
-('i5', 'instructor', NULL),
-('i6', 'instructor', NULL),
-('i7', 'instructor', NULL),
-('i8', 'instructor', NULL),
-('i9', 'instructor', NULL),
-('s1', 'student', NULL),
-('s2', 'student', NULL),
-('s3', 'student', NULL),
-('s30', 'student', NULL),
-('s4', 'student', NULL),
-('s40', 'student', NULL),
-('s5', 'student', NULL),
-('s6', 'student', NULL);
+('i1', 'instructor', 1111),
+('i2', 'instructor', 1112),
+('i3', 'instructor', 1113),
+('i4', 'instructor', 1114),
+('i5', 'instructor', 1115),
+('i6', 'instructor', 1116),
+('i7', 'instructor', 1117),
+('i8', 'instructor', 1118),
+('i9', 'instructor', 1119),
+('s1', 'student', 1120),
+('s2', 'student', 1121),
+('s3', 'student', 1122),
+('s30', 'student', 1123),
+('s4', 'student', 1124),
+('s40', 'student', 1125),
+('s5', 'student', 1126),
+('s6', 'student', 1127);
 
 
 

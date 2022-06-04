@@ -207,6 +207,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <!-- 6 -->
 
+<<<<<<< HEAD
 <div class="container">
   <div class="section-heading">
     <h3 class="heading--secondary">Student's Advisor</h3>
@@ -307,10 +308,92 @@ while ($row = mysqli_fetch_assoc($result)) {
     </table>
   </div>
 </div>
+=======
+<h3 class="heading--secondary">Student's Advisor</h3>
+<table class="table">
+  <thead>
+    
+    <td>Name</td>
+    <td>Status</td>
+    <td>Department</td>
+  </thead>
+  <tbody>
+    <?php
+
+    $Advisorquery = "SELECT  i.iname, i.rankk, i.dName FROM instructor i WHERE i.ssn in (SELECT s.advisorSsn FROM  student s WHERE  s.ssn = '$ssn') ";
+    $Advisor= mysqli_query($conn, $Advisorquery);
+
+    if (mysqli_num_rows($Advisor) > 0) {
+      while ($tupple = mysqli_fetch_assoc($Advisor)) {
+        echo $tableRowStart;
+       
+        createTableElements($tupple["iname"], $tupple["rankk"], $tupple["dName"]);
+        echo $tableRowEnd;
+      }
+    }
+    ?>
+  </tbody>
+</table>
+
+<!-- 7 -->
+<h3 class="heading--secondary">Curriculum</h3>
+<table class="table">
+  <thead>
+    
+    <td>Course Code</td>
+    <td>Course Title</td>
+    <td>ECTS</td>
+  </thead>
+  <tbody>
+    <?php
+
+    $Curriculumquery = "SELECT C.courseCode, C.courseName, C.ects FROM (student S INNER JOIN curriculacourses CC on S.currCode = CC.currcode) INNER JOIN course C on C.courseCode = CC.courseCode WHERE S.ssn = '$ssn' ";
+    $Curriculum= mysqli_query($conn, $Curriculumquery);
+
+    if (mysqli_num_rows($Curriculum) > 0) {
+      while ($tupple = mysqli_fetch_assoc($Curriculum)) {
+        echo $tableRowStart;
+        
+        createTableElements($tupple["courseCode"], $tupple["courseName"], $tupple["ects"]);
+        echo $tableRowEnd;
+      }
+    }
+    ?>
+  </tbody>
+</table>
+
+<!-- 8 -->
+
+<h3 class="heading--secondary">Deparment</h3>
+<table class="table">
+  <thead>
+    
+    <td>Department Name</td>
+    <td>Building</td>
+  </thead>
+  <tbody>
+    <?php
+
+    $Departmentquery = "SELECT D.dName, D.buildingName FROM (student S INNER JOIN curricula C on S.currCode = C.currcode) INNER JOIN department D on D.dName = C.dName WHERE S.ssn = '$ssn'";
+    $Department= mysqli_query($conn, $Departmentquery);
+
+    if (mysqli_num_rows($Department) > 0) {
+      while ($tupple = mysqli_fetch_assoc($Department)) {
+        echo $tableRowStart;
+        
+        createTableElements($tupple["dName"], $tupple["buildingName"]);
+        echo $tableRowEnd;
+      }
+    }
+    ?>
+  </tbody>
+</table>
+>>>>>>> a9d486ff2a159fe9f1c834c81e88c5d0d30c38ea
 
 
 <!-- 9 -->
 
+<<<<<<< HEAD
 <div class="container">
   <div class="section-heading">
     <h3 class="heading--secondary">List of Projects</h3>
@@ -346,3 +429,32 @@ while ($row = mysqli_fetch_assoc($result)) {
   </div>
 </div>
 <?php include "./footer.php" ?>
+=======
+<h3 class="heading--secondary">List Of Projects</h3>
+<table class="table">
+  <thead>
+    
+    <td> Instructor Name</td>
+    <td>Project Name</td>
+    <td>Project Topic</td>
+    <td>Working Hour</td>
+    
+  </thead>
+  <tbody>
+    <?php
+
+    $Projectquery = "SELECT  I.iname, PHS.pname, P.subject, PHS.workingHour FROM (project_has_gradstudent PHS INNER JOIN project P on PHS.leadSsn = P.leadSsn) JOIN instructor I on I.ssn = PHS.leadSsn WHERE PHS.Gradssn = '$ssn'";
+    $Project= mysqli_query($conn, $Projectquery);
+
+    if (mysqli_num_rows($Project) > 0) {
+      while ($tupple = mysqli_fetch_assoc($Project)) {
+        echo $tableRowStart;
+        
+        createTableElements($tupple["iname"], $tupple["pname"], $tupple["subject"], $tupple["workingHour"]);
+        echo $tableRowEnd;
+      }
+    }
+    ?>
+  </tbody>
+</table>
+>>>>>>> a9d486ff2a159fe9f1c834c81e88c5d0d30c38ea
