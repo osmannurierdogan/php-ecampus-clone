@@ -365,13 +365,14 @@ function createTableElements(...$arguments)
       <thead>
         <td>Days \ Hours</td>
         <?php
-
+        $hoursArray = [];
         $displayWeeklyScheduleHoursQuery = "SELECT DISTINCT hourr FROM timeslot";
         $displayWeeklyScheduleHoursResult = mysqli_query($conn, $displayWeeklyScheduleHoursQuery);
 
         if (mysqli_num_rows($displayWeeklyScheduleHoursResult) > 0) {
           while ($tupple = mysqli_fetch_assoc($displayWeeklyScheduleHoursResult)) {
             createTableElements($tupple["hourr"]);
+            array_push($hoursArray, $tupple["hourr"]);
           }
         }
         ?>
@@ -379,50 +380,50 @@ function createTableElements(...$arguments)
       <tbody>
         <?php
         $sortedDays = [];
-        $displayWeeklyScheduleDistinctDaysQuery = "SELECT DISTINCT hourr, dayy as day FROM timeslot ORDER BY CASE WHEN dayy = 'Monday' THEN 1 WHEN dayy = 'Tuesday' THEN 2 WHEN dayy = 'Wednesday' THEN 3 WHEN dayy = 'Thursday' THEN 4 WHEN dayy = 'Friday' THEN 5 WHEN dayy = 'Saturday' THEN 6 WHEN dayy = 'Sunday' THEN 7 END ASC";
+        $displayWeeklyScheduleDistinctDaysQuery = "SELECT DISTINCT dayy FROM timeslot ORDER BY CASE WHEN dayy = 'Monday' THEN 1 WHEN dayy = 'Tuesday' THEN 2 WHEN dayy = 'Wednesday' THEN 3 WHEN dayy = 'Thursday' THEN 4 WHEN dayy = 'Friday' THEN 5 WHEN dayy = 'Saturday' THEN 6 WHEN dayy = 'Sunday' THEN 7 END ASC";
         $displayWeeklyScheduleDistinctDaysResult = mysqli_query($conn, $displayWeeklyScheduleDistinctDaysQuery);
         if (mysqli_num_rows($displayWeeklyScheduleDistinctDaysResult) > 0) {
           while ($tupple = mysqli_fetch_assoc($displayWeeklyScheduleDistinctDaysResult)) {
-            /* global $tableRowStart, $tableRowEnd;
-        echo $tableRowStart . createTableElements($tupple["day"]); */
-            array_push($sortedDays, $tupple["day"]);
+            array_push($sortedDays, $tupple["dayy"]);
+            //createTableElements($tupple["dayy"]);
           }
         }
-        // print_r($sortedDays);
-        $sortedDaysLength = count($sortedDays);
-
-        $twoDimensionalArray = array(array(), array());
-        $courseArray = [];
-        //$displayWeeklyScheduleOfInstructorQuery = "SELECT DISTINCT W.issn, W.courseCode, W.sectionId, W.yearr, W.semester, W.dayy, W.hourr FROM sectionn S JOIN weeklyschedule W on S.issn = W.issn WHERE W.issn = '$issn'";
-        $displayWeeklyScheduleOfInstructorQuery = "SELECT DISTINCT W.issn, W.courseCode, W.sectionId, W.yearr, W.semester, W.dayy, W.hourr FROM sectionn S JOIN weeklyschedule W on S.issn = W.issn WHERE W.issn = '$issn'";
+        
+        global $tableRowStart, $tableRowEnd;
+        $courseArray = [];        
+        $displayWeeklyScheduleOfInstructorQuery = "SELECT DISTINCT W.courseCode, W.sectionId, W.dayy, W.hourr FROM sectionn S JOIN weeklyschedule W on S.issn = W.issn WHERE W.issn = '$issn'";
         $displayWeeklyScheduleOfInstructorQueryResult = mysqli_query($conn, $displayWeeklyScheduleOfInstructorQuery);
-        // $rows = mysqli_fetch_assoc($displayWeeklyScheduleOfInstructorQueryResult);
-
+        
         if (mysqli_num_rows($displayWeeklyScheduleOfInstructorQueryResult) > 0) {
           while ($tupple = mysqli_fetch_assoc($displayWeeklyScheduleOfInstructorQueryResult)) {
-            array_push($courseArray, $tupple["issn"], $tupple["sectionId"], $tupple["courseCode"], $tupple["yearr"], $tupple["semester"], $tupple["dayy"], $tupple["hourr"]);
-            for($i = 0; $i < $sortedDaysLength; $i++){
-              if(strcmp($tupple["hourr"], $sortedDays[$i]["hourr"]) !== 0){
-                echo "Success => ";
-              } else {
-                error_log("Error.");
+            $courseCode = $tupple["courseCode"];
+            $sectionId = $tupple["sectionId"];
+            $dayy = $tupple["dayy"];
+            $hourr = $tupple["hourr"];
+            
+            //array_push($courseArray, $tupple["sectionId"], $tupple["courseCode"], $tupple["dayy"], $tupple["hourr"]);
+            
+            for($i = 0; $i < count($sortedDays); $i++){
+              echo $tableRowStart;
+              if($dayy == $sortedDays[$i]){
+                echo createTableElements($sortedDays[$i]);
+                for($j = 0; $j < count($hoursArray); $j++){
+                  if($hourr == $hoursArray[$j]){
+                    createTableElements($courseCode.".".$sectionId);
+                  } else {
+                    createTableElements("Free");
+                  }
+                }
+                echo $tableRowEnd;
               }
             }
           }
-          /* for($i = 0; $i < count($rows); $i++){
-            for($j = 0; $j < $sortedDaysLength; $j++){
-              if($rows["dayy"] == $sortedDays[$j]["dayy"] && $rows["hourr"] == $sortedDays[$j]["hourr"]){
-                array_push($twoDimensionalArray, $sortedDays[$j]["dayy"], $sortedDays[$j]["hourr"]);
-              } 
-            }
-          }
-          print_r($twoDimensionalArray); */
+          
         }
-        //print_r($courseArray);
-        print_r($twoDimensionalArray);
+        
+        print_r($courseArray);
         echo "<br><br><br>";
 
-        global $tableRowStart, $tableRowEnd;
 
         ?>
 
