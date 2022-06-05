@@ -16,7 +16,7 @@
 
   <!-- // ! CSS Styles -->
   <!-- <link rel="stylesheet" href="./css/main.css"> -->
-  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="./css/main.css">
 
   <!-- // ! JS SCRIPTS -->
   <script src="./js/accordionMenu.js" defer></script>
