@@ -29,6 +29,31 @@ function createTableElements(...$arguments)
 
 ?>
 
+<div class="container">
+  <div class="user-information">
+    <div class="user-information__user-image">
+      <img src="https://i.pravatar.cc/100" alt="">
+    </div>
+    <div class="user-information__user-text">
+      <?php
+      $instructorInformationsQuery = "SELECT iName, rankk, dName FROM instructor WHERE ssn = '$issn';";
+      $instructorInformationsQueryResult = mysqli_query($conn, $instructorInformationsQuery);
+      $instructorName = "";
+      $instructorRank = "";
+      $instructorDepartment = "";
+      if (mysqli_num_rows($instructorInformationsQueryResult) > 0) {
+        while ($tupple = mysqli_fetch_assoc($instructorInformationsQueryResult)) {
+          $instructorName = $tupple["iName"];
+          $instructorRank = $tupple["rankk"];
+          $instructorDepartment = $tupple["dName"];
+        }
+      }
+      echo "<p class='user-information__user-text-rank-name'>$instructorRank. $instructorName</p><p class='user-information__user-text-department'>$instructorDepartment</p>";
+      ?>
+    </div>
+  </div>
+</div>
+
 
 <div class="container">
   <div class="section-heading">
@@ -326,6 +351,7 @@ function createTableElements(...$arguments)
           <div class="form-group">
             <label for="courseList">Select Section</label>
             <select name="courseList" id="courseList">
+              <option default value="">Select</option>
               <?php
               $displayInstructorsCoursesQuery = "SELECT DISTINCT E.issn, E.courseCode, E.yearr, E.semester, E.sectionId FROM enrollment E WHERE E.issn = '$issn'";
               $displayInstructorCourses = mysqli_query($conn, $displayInstructorsCoursesQuery);
@@ -355,7 +381,7 @@ function createTableElements(...$arguments)
 
 
 
-<div class="container">
+<div class="container margin-bottom-large">
   <div class="section-heading">
     <h3 class="heading--secondary">Weekly Schedule</h3>
     <i class="section-heading__icon fas fa-chevron-down"></i>
@@ -388,43 +414,77 @@ function createTableElements(...$arguments)
             //createTableElements($tupple["dayy"]);
           }
         }
-        
+
         global $tableRowStart, $tableRowEnd;
-        $courseArray = [];        
+        $courseArray = [];
         $displayWeeklyScheduleOfInstructorQuery = "SELECT DISTINCT W.courseCode, W.sectionId, W.dayy, W.hourr FROM sectionn S JOIN weeklyschedule W on S.issn = W.issn WHERE W.issn = '$issn'";
         $displayWeeklyScheduleOfInstructorQueryResult = mysqli_query($conn, $displayWeeklyScheduleOfInstructorQuery);
-        
+
         if (mysqli_num_rows($displayWeeklyScheduleOfInstructorQueryResult) > 0) {
           while ($tupple = mysqli_fetch_assoc($displayWeeklyScheduleOfInstructorQueryResult)) {
             $courseCode = $tupple["courseCode"];
             $sectionId = $tupple["sectionId"];
             $dayy = $tupple["dayy"];
             $hourr = $tupple["hourr"];
-            
+
+
             //array_push($courseArray, $tupple["sectionId"], $tupple["courseCode"], $tupple["dayy"], $tupple["hourr"]);
-            
-            for($i = 0; $i < count($sortedDays); $i++){
+
+            for ($i = 0; $i < count($sortedDays); $i++) {
               echo $tableRowStart;
-              if($dayy == $sortedDays[$i]){
+              if ($dayy == $sortedDays[$i] && searchDay($dayy, $sortedDays)) {
                 echo createTableElements($sortedDays[$i]);
-                for($j = 0; $j < count($hoursArray); $j++){
-                  if($hourr == $hoursArray[$j]){
-                    createTableElements($courseCode.".".$sectionId);
+                for ($j = 0; $j < count($hoursArray); $j++) {
+                  if ($hourr == $hoursArray[$j]) {
+                    createTableElements($courseCode . "." . $sectionId);
                   } else {
                     createTableElements("Free");
                   }
                 }
                 echo $tableRowEnd;
               }
+              /* else {
+                echo createTableElements($sortedDays[$i]);
+                for ($j = 0; $j < count($hoursArray); $j++) {
+                  createTableElements("Free");
+                }
+                echo $tableRowEnd;
+              } */
             }
           }
-          
         }
-        
-        print_r($courseArray);
-        echo "<br><br><br>";
 
+        function searchDay($day, $array)
+        {
+          if (in_array($day, $array)) {
+            return true;
+          }
+          return false;
+        }
 
+        /* //for ($i = 0; $i < 1; $i++) {
+        for ($i = 0; $i < count($sortedDays); $i++) {
+          for ($j = 0; $j < count($hoursArray); $j++) {
+            array_push($courseArray[0], $sortedDays[$i]);
+            array_push($courseArray[1], $hoursArray[$j]);
+          }
+        }
+        //print_r($courseArray);
+
+        for ($i = 0; $i < count($sortedDays); $i++) {
+          echo $sortedDays[$i] . "<br>";
+        }
+        echo "////////////////////////////////////////";
+        for ($i = 0; $i < count($hoursArray); $i++) {
+          echo $hoursArray[$i] . "<br>";
+        }
+        echo "////////////////////////////////////////";
+        for ($i = 0; $i < count($courseArray); $i++) {
+          echo $courseArray[$i] . "<br>";
+        } */
+        /* for ($j = 0; $j < count($courseArray[$i]); $j++) {
+              echo $courseArray[$i][$j] . "<br>";
+            } */
         ?>
 
       </tbody>
