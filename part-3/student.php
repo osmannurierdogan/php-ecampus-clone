@@ -4,16 +4,13 @@ include "./header.php";
 
 <?php
 $ssn = $_GET["ssn"];
-//$gradOrUgrad = "gradOrUgrad";
-//$advisorSsn = "advisorSsn";
-//$currCode = "currCode";
-//$studentid = "studentid";
-//$studentname = "studentname";
+
 $tableRowStart = "<tr>";
 $tableDataStart = "<td>";
 $tableDataEnd = "</td>";
 $tableRowEnd = "</tr>";
 $isGraduate = "Ungraduated";
+// kod tekrarından kaçınmak için tabloyu oluşturan metodu yazdık.
 function createTableElements(...$arguments)
 {
   global $tableDataStart;
@@ -23,12 +20,6 @@ function createTableElements(...$arguments)
   }
 }
 
-/*$query = "select $ssn, $gradOrUgrad, $advisorSsn, $currCode, $studentid, $studentname from student";
-$result = mysqli_query($conn, $query);
-while ($row = mysqli_fetch_assoc($result)) {
-  //echo "<a class='contact-link text-success' href='contact.php?lname=" . $row["lname"] . "&fname=" . $row["fname"] . "'>" . $row["fname"] . " " . $row["lname"] . "</a>";
-  echo $row[$ssn] . " - " . $row[$gradOrUgrad] . " - " . $row[$advisorSsn] . " - " . $row[$currCode] . " - " . $row[$studentid] . " - " . $row[$studentname] . "<br>";
-}*/
 ?>
 
 <div class="container">
@@ -38,7 +29,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     </div>
     <div class="user-information__user-text">
       <?php
-      $studentInformationsQuery = "SELECT studentname FROM student WHERE ssn = '$ssn';";
+      $studentInformationsQuery = "SELECT studentname FROM student WHERE ssn = '$ssn';";  // Burada sisteme giren öğrencinin ismini mySQL'den alıyoruz
       $studentInformationsQueryResult = mysqli_query($conn, $studentInformationsQuery);
       $studentName = "";
       if (mysqli_num_rows($studentInformationsQueryResult) > 0) {
@@ -67,7 +58,7 @@ while ($row = mysqli_fetch_assoc($result)) {
       </thead>
       <tbody>
         <?php
-        $gradorUngradquery = "SELECT S.ssn, S.studentid, S.gradorUgrad FROM student S WHERE S.ssn = '$ssn'";
+        $gradorUngradquery = "SELECT S.ssn, S.studentid, S.gradorUgrad FROM student S WHERE S.ssn = '$ssn'"; // Öğrencinin adını ID'sini ve lisans ya da yükseklisans'ta olduğunu gösteriyoruz.  
         $standing = mysqli_query($conn, $gradorUngradquery);
 
         if (mysqli_num_rows($standing) > 0) {
@@ -107,7 +98,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         $StudentCoursesquery = "SELECT E.sssn, E.courseCode, I.iname , E.sectionId From enrollment E, instructor I WHERE E.sssn= '$ssn' AND I.ssn = E.issn and E.yearr = 2022 ";
         $StudentCourses = mysqli_query($conn, $StudentCoursesquery);
-
+        // Burada öğrencinin 2022 yılında kayıtlı olduğu kursları gösteriyoruz. Sorgu bize öğrencinin ssn'ini, aldığı kursun kodunu dersi veren hocanın adını ve dersin seciton ID'sini php sayfasında tablo halinde gösteriyor.   
         if (mysqli_num_rows($StudentCourses) > 0) {
           while ($tupple = mysqli_fetch_assoc($StudentCourses)) {
             echo $tableRowStart;
@@ -141,7 +132,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         $Transcriptquery = "SELECT C.courseCode, C.courseName, C.ects, E.lettergrade FROM course C, enrollment E WHERE E.sssn= '$ssn' AND C.courseCode = E.courseCode ";
         $Transcript = mysqli_query($conn, $Transcriptquery);
-
+         // Öğrencinin transcriptinde olması gerekenleri transcript kısmında ekledik. Aldığı kursların kodu, adı, ects'si ve kurstan aldığı haf notunu sorgu ile aldık. 
         if (mysqli_num_rows($Transcript) > 0) {
           while ($tupple = mysqli_fetch_assoc($Transcript)) {
             echo $tableRowStart;
@@ -177,6 +168,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         $Examquery = "SELECT C.courseCode, C.courseName, A.eName, A.yearr, A.semester, A.score FROM  (attends A INNER JOIN course C on C.courseCode = A.courseCode) WHERE  A.sssn = '$ssn' ";
         $Exam = mysqli_query($conn, $Examquery);
+        // Öğrenci aldığı kursların sınavlarının harf notlarını bu kısımda görebiliyor. Sınava ne zaman girdiğini de gösterdik.  
         if (mysqli_num_rows($Exam) > 0) {
           while ($tupple = mysqli_fetch_assoc($Exam)) {
             echo $tableRowStart;
@@ -212,6 +204,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         $WSquery = "SELECT DISTINCT W.courseCode, W.sectionId, W.yearr, W.dayy, W.hourr FROM (sectionn S INNER JOIN weeklyschedule W on S.issn = W.issn) INNER JOIN enrollment E on E.issn= W.issn WHERE W.issn = E.issn AND E.courseCode = W.courseCode AND E.sssn = '$ssn' AND E.sectionId = W.sectionID ";
         $WS = mysqli_query($conn, $WSquery);
+        // Öğrencinin haftalık programını gösterdik.
         if (mysqli_num_rows($WS) > 0) {
           while ($tupple = mysqli_fetch_assoc($WS)) {
             echo $tableRowStart;
@@ -247,7 +240,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         $Advisorquery = "SELECT  i.iname, i.rankk, i.dName FROM instructor i WHERE i.ssn in (SELECT s.advisorSsn FROM  student s WHERE  s.ssn = '$ssn') ";
         $Advisor = mysqli_query($conn, $Advisorquery);
-
+         // Öğrencinin danışmanının bilgilerini gösterdik.  
         if (mysqli_num_rows($Advisor) > 0) {
           while ($tupple = mysqli_fetch_assoc($Advisor)) {
             echo $tableRowStart;
@@ -281,7 +274,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         $Curriculumquery = "SELECT C.courseCode, C.courseName, C.ects FROM (student S INNER JOIN curriculacourses CC on S.currCode = CC.currcode) INNER JOIN course C on C.courseCode = CC.courseCode WHERE S.ssn = '$ssn' ";
         $Curriculum = mysqli_query($conn, $Curriculumquery);
-
+         // Öğrencinin alması gereken derslerin bilgilerini gösterdik. 
         if (mysqli_num_rows($Curriculum) > 0) {
           while ($tupple = mysqli_fetch_assoc($Curriculum)) {
             echo $tableRowStart;
@@ -315,7 +308,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         $Departmentquery = "SELECT D.dName, D.buildingName FROM (student S INNER JOIN curricula C on S.currCode = C.currcode) INNER JOIN department D on D.dName = C.dName WHERE S.ssn = '$ssn'";
         $Department = mysqli_query($conn, $Departmentquery);
-
+        //Öğrencinin departmanını gösterdik departman adı ve binasını. 
         if (mysqli_num_rows($Department) > 0) {
           while ($tupple = mysqli_fetch_assoc($Department)) {
             echo $tableRowStart;
@@ -353,7 +346,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         $Projectquery = "SELECT  I.iname, PHS.pname, P.subject, PHS.workingHour FROM (project_has_gradstudent PHS INNER JOIN project P on PHS.leadSsn = P.leadSsn) JOIN instructor I on I.ssn = PHS.leadSsn WHERE PHS.Gradssn = '$ssn'";
         $Project = mysqli_query($conn, $Projectquery);
-
+        // eğer öğrenci yüksek lisans öğrencisi ise bu bölümde öğrencinin projeleri görünecek (Proje hocasının adı, projenin adı, projeni konusu, ve projede çalıştığı saat süresi).
         if (mysqli_num_rows($Project) > 0) {
           while ($tupple = mysqli_fetch_assoc($Project)) {
             echo $tableRowStart;
