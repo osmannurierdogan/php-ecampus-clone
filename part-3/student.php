@@ -10,7 +10,7 @@ $tableDataStart = "<td>";
 $tableDataEnd = "</td>";
 $tableRowEnd = "</tr>";
 $isGraduate = "Ungraduated";
-// kod tekrarından kaçınmak için tabloyu oluşturan metodu yazdık.
+// kod tekrarından kaçınmak için tabloyu hücrelerini oluşturan metodu yazdık.
 function createTableElements(...$arguments)
 {
   global $tableDataStart;
